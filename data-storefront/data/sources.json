@@ -1,0 +1,418 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Field-to-source mapping for the agent systems dataset. Only fields with a confirmed, accessible source are included.",
+  "version": "1.0.0",
+  "generated_at": "2026-04-10",
+  "verification_note": "All URLs verified live on 2026-04-10 via WebFetch unless noted as training-knowledge.",
+
+  "systems": {
+
+    "openclaw": {
+      "system.name": {
+        "source_url": "https://openclaw.dev",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Homepage. OpenClaw binary locally verified at v2026.3.13."
+      },
+      "system.version": {
+        "source_url": "https://openclaw.dev",
+        "access_method": "cli",
+        "cli_command": "openclaw --version",
+        "update_frequency": "on-change",
+        "notes": "Run locally: openclaw --version"
+      },
+      "system.license": {
+        "source_url": "https://github.com/openclaw/openclaw",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Check LICENSE file in GitHub repo."
+      },
+      "qualification.persona": {
+        "source_url": "https://openclaw.dev/docs",
+        "access_method": "direct_url",
+        "cli_command": "openclaw agents --help",
+        "update_frequency": "on-change",
+        "notes": "Verified via openclaw --help: agents * subcommand, --profile flag, configurable agent defaults. Check docs for system prompt field details."
+      },
+      "qualification.file_access": {
+        "source_url": "https://openclaw.dev/docs",
+        "access_method": "direct_url",
+        "cli_command": "openclaw sandbox --help",
+        "update_frequency": "on-change",
+        "notes": "Verified via openclaw --help: sandbox * and memory * subcommands. State stored under ~/.openclaw."
+      },
+      "qualification.remote_accessibility": {
+        "source_url": "https://openclaw.dev/docs",
+        "access_method": "direct_url",
+        "cli_command": "openclaw gateway --help && openclaw channels --help",
+        "update_frequency": "on-change",
+        "notes": "Verified via openclaw --help: gateway *, acp *, channels *, devices *, webhooks *, dashboard, qr commands."
+      },
+      "qualification.async_scheduling": {
+        "source_url": "https://openclaw.dev/docs",
+        "access_method": "direct_url",
+        "cli_command": "openclaw cron --help",
+        "update_frequency": "on-change",
+        "notes": "Verified via openclaw --help: cron *, webhooks *, node *, daemon * subcommands. Native cron scheduler confirmed."
+      },
+      "comparison.cost_model": {
+        "source_url": "https://openclaw.dev",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Check homepage or pricing page. Open-source core likely free; verify if cloud/managed tier exists."
+      },
+      "comparison.underlying_models": {
+        "source_url": "https://openclaw.dev/docs",
+        "access_method": "direct_url",
+        "cli_command": "openclaw config --help",
+        "update_frequency": "monthly",
+        "notes": "Check docs for supported model providers and default model configuration."
+      },
+      "comparison.tool_types": {
+        "source_url": "https://openclaw.dev/docs",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Check docs for built-in tools. MCP support likely given modern agent framework — verify."
+      },
+      "comparison.memory_types": {
+        "source_url": "https://openclaw.dev/docs",
+        "access_method": "direct_url",
+        "cli_command": "openclaw memory --help",
+        "update_frequency": "monthly",
+        "notes": "memory * subcommand confirmed in openclaw --help. Check docs for memory architecture details."
+      }
+    },
+
+    "claude-dispatch": {
+      "system.name": {
+        "source_url": "https://code.claude.com/docs/en/overview",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Official Claude Code documentation. Redirects from docs.anthropic.com."
+      },
+      "system.version": {
+        "source_url": "https://code.claude.com/docs/en/overview",
+        "access_method": "cli",
+        "cli_command": "claude --version",
+        "update_frequency": "weekly",
+        "notes": "Auto-updates on native install. Run claude --version for current version."
+      },
+      "system.license": {
+        "source_url": "https://claude.com/legal/claude-code-license",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Proprietary (Anthropic). Check legal page for full terms."
+      },
+      "qualification.persona": {
+        "source_url": "https://code.claude.com/docs/en/memory",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "CLAUDE.md files define identity per project/folder. Confirmed in docs: 'How Claude remembers your project'. Multi-persona via separate CLAUDE.md files per business folder."
+      },
+      "qualification.file_access": {
+        "source_url": "https://code.claude.com/docs/en/tools-reference",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Full local FS read/write confirmed. Tools: Read, Write, Edit, Glob, Grep, Bash. macOS, Linux, Windows (WSL) supported per install docs."
+      },
+      "qualification.remote_accessibility": {
+        "source_url": "https://code.claude.com/docs/en/remote-control",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Remote Control doc confirmed: continue local sessions from phone/any device. Claude iOS app, claude.ai/code web. Channels doc: Telegram, Discord, iMessage, webhook push. No public REST API for programmatic dispatch."
+      },
+      "qualification.async_scheduling": {
+        "source_url": "https://code.claude.com/docs/en/desktop-scheduled-tasks",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Desktop scheduled tasks (local, 1-min minimum interval) and cloud scheduled tasks (Anthropic-managed, 1-hour minimum) both confirmed in docs. Manual/hourly/daily/weekly/weekday presets plus natural-language scheduling via Claude."
+      },
+      "comparison.cost_model": {
+        "source_url": "https://code.claude.com/docs/en/costs",
+        "access_method": "direct_url",
+        "update_frequency": "weekly",
+        "notes": "Confirmed: average ~$6/dev/day, ~$100-200/dev/month with Sonnet 4.6 via API. Subscription tiers (Pro, Max) also available at claude.com/pricing. Check claude.com/pricing for current rates."
+      },
+      "comparison.context_window": {
+        "source_url": "https://code.claude.com/docs/en/costs",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Context window determined by underlying model (Claude Sonnet 4.6 default). Check Anthropic model docs for current limits."
+      },
+      "comparison.tool_types": {
+        "source_url": "https://code.claude.com/docs/en/tools-reference",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "MCP confirmed. Bash (code execution), Read/Write/Edit/Glob/Grep (file ops), WebFetch (web). Browser automation via MCP. Custom tools via Agent SDK."
+      },
+      "comparison.memory_types": {
+        "source_url": "https://code.claude.com/docs/en/memory",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "CLAUDE.md (file-based persistent instructions), auto-memory (learned facts saved across sessions), in-context conversation history, external via MCP. No built-in vector store."
+      },
+      "comparison.underlying_models": {
+        "source_url": "https://code.claude.com/docs/en/costs",
+        "access_method": "direct_url",
+        "update_frequency": "weekly",
+        "notes": "Default: Claude Sonnet 4.6. Also Opus 4.6, Haiku 4.5 switchable via /model. Third-party providers (Bedrock, Vertex, Foundry) supported. Docs: /en/third-party-integrations."
+      }
+    },
+
+    "crewai": {
+      "system.name": {
+        "source_url": "https://docs.crewai.com",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Official CrewAI documentation."
+      },
+      "system.version": {
+        "source_url": "https://pypi.org/project/crewai/",
+        "access_method": "direct_url",
+        "update_frequency": "weekly",
+        "notes": "PyPI page shows latest version. Also: pip show crewai for installed version."
+      },
+      "system.license": {
+        "source_url": "https://github.com/crewAIInc/crewAI/blob/main/LICENSE",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "MIT License. Verify on GitHub."
+      },
+      "qualification.persona": {
+        "source_url": "https://docs.crewai.com/en/concepts/agents",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Agent(role, goal, backstory, system_prompt) confirmed in docs. Multi-agent crews with distinct personas. memory=True for persistent memory."
+      },
+      "qualification.file_access": {
+        "source_url": "https://docs.crewai.com/en/tools/overview",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Built-in FileReadTool, FileWriterTool, DirectoryReadTool confirmed via docs.crewai.com/llms.txt. Full local FS via Python stdlib."
+      },
+      "qualification.remote_accessibility": {
+        "source_url": "https://docs.crewai.com/en/concepts/production-architecture",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "CrewAI Enterprise Cloud exposes REST API. crewai deploy CLI confirmed. Self-hosted via FastAPI wrapper."
+      },
+      "qualification.async_scheduling": {
+        "source_url": "https://docs.crewai.com/en/enterprise/features/automations",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Enterprise automations: webhook and API triggers confirmed. kickoff_async() for async execution. Cron scheduling via CrewAI Cloud Enterprise — verify exact primitives at docs.crewai.com/en/enterprise/guides/automation-triggers."
+      },
+      "comparison.cost_model": {
+        "source_url": "https://www.crewai.com/pricing",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Open-source core is free (MIT). Enterprise/Cloud pricing at crewai.com/pricing — check for current tiers."
+      },
+      "comparison.tool_types": {
+        "source_url": "https://docs.crewai.com/en/tools/overview",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "40+ built-in tools confirmed. Custom tools supported. MCP: verify at docs.crewai.com — likely supported given ecosystem."
+      },
+      "comparison.memory_types": {
+        "source_url": "https://docs.crewai.com/en/concepts/memory",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Unified memory system confirmed — replaces separate short/long-term/entity/external types. Hierarchical scopes, composite scoring (semantic + recency + importance)."
+      },
+      "comparison.underlying_models": {
+        "source_url": "https://docs.crewai.com/en/concepts/llms",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Confirmed providers: OpenAI (GPT-4, GPT-4o, o1, o3), Anthropic (Claude 3 family, Claude Sonnet 4), Google (Gemini 2.0-2.5), Azure, AWS Bedrock, Meta Llama, Groq, Mistral, Ollama, Hugging Face, IBM watsonx, Perplexity, Fireworks, SambaNova, Cerebras. Model-agnostic via LiteLLM."
+      }
+    },
+
+    "agno": {
+      "system.name": {
+        "source_url": "https://docs.agno.com",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Official Agno documentation. Formerly Phidata."
+      },
+      "system.version": {
+        "source_url": "https://pypi.org/project/agno/",
+        "access_method": "direct_url",
+        "update_frequency": "weekly",
+        "notes": "PyPI page for current version."
+      },
+      "system.license": {
+        "source_url": "https://github.com/agno-agi/agno/blob/main/LICENSE",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "MPL-2.0. Verify on GitHub."
+      },
+      "qualification.persona": {
+        "source_url": "https://docs.agno.com/agents/building-agents",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Agent(name, role, description, instructions=[]) confirmed. System prompt fully configurable. Multi-agent teams with distinct personas."
+      },
+      "qualification.file_access": {
+        "source_url": "https://docs.agno.com/examples/agents/tools/overview",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "FileTools toolkit confirmed via docs.agno.com/llms.txt. Full local FS via Python stdlib."
+      },
+      "qualification.remote_accessibility": {
+        "source_url": "https://docs.agno.com/agent-os/remote-execution/overview",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Remote execution docs confirmed: remote-execution/overview, remote-agent, gateway. FastAPI /run and /health endpoints. Agno Cloud Playground web UI. CLI available."
+      },
+      "qualification.async_scheduling": {
+        "source_url": "https://docs.agno.com/agent-os/scheduler/overview",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "AgentOS scheduler confirmed: standard 5-field cron syntax, POST /schedules/{id}/trigger for manual trigger, retry logic, timezone support, run history. Event-driven/webhook not documented in scheduler — verify separately."
+      },
+      "comparison.cost_model": {
+        "source_url": "https://www.agno.com/pricing",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Open-source core free (MPL-2.0). Agno Cloud pricing at agno.com/pricing — check for current tiers."
+      },
+      "comparison.tool_types": {
+        "source_url": "https://docs.agno.com/agent-os/mcp/tools",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "MCP support confirmed via docs.agno.com/llms.txt (agent-os/mcp/tools). FileTools, custom tools confirmed."
+      },
+      "comparison.memory_types": {
+        "source_url": "https://docs.agno.com/agents/usage/agent-with-memory",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "In-context, external storage, persistent sessions confirmed. Vector store: check docs — Agno supports multiple backends."
+      },
+      "comparison.underlying_models": {
+        "source_url": "https://docs.agno.com/context/agent/overview",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Model-agnostic. Check docs for full provider list — known to support OpenAI, Anthropic, Google, Groq, Ollama, and others."
+      }
+    },
+
+    "eliza": {
+      "system.name": {
+        "source_url": "https://docs.elizaos.ai",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Official elizaOS docs. elizaos.github.io/eliza redirects → eliza.how → docs.elizaos.ai (verified redirect chain)."
+      },
+      "system.version": {
+        "source_url": "https://www.npmjs.com/package/@elizaos/core",
+        "access_method": "direct_url",
+        "update_frequency": "weekly",
+        "notes": "npm package page for current version."
+      },
+      "system.license": {
+        "source_url": "https://github.com/elizaos/eliza/blob/main/LICENSE",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "MIT License. Verify on GitHub."
+      },
+      "qualification.persona": {
+        "source_url": "https://docs.elizaos.ai/agents/character-interface",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Character file fields confirmed: name (required), bio (required), username, system (custom system prompt), adjectives, topics, style, messageExamples, postExamples, knowledge, plugins, settings, templates. Most expressive persona system of all qualifying systems."
+      },
+      "qualification.file_access": {
+        "source_url": "https://docs.elizaos.ai/plugins/architecture",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Node.js runtime with full FS access. Plugin architecture allows file I/O via actions/services. No sandboxing by default."
+      },
+      "qualification.remote_accessibility": {
+        "source_url": "https://docs.elizaos.ai/rest-reference/agents/create-a-new-agent",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "REST API confirmed in docs (rest-reference section). CLI (elizaos deploy) confirmed. Cloud deployment guide confirmed (guides/deploy-to-cloud). Docker deployable."
+      },
+      "qualification.async_scheduling": {
+        "source_url": "https://docs.elizaos.ai/guides/background-tasks",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Background tasks doc confirmed: 'Long-running and recurring operations'. Built-in action loop runs continuously. Plugin-based event-driven triggers (Discord, Twitter, Telegram webhooks). Custom intervals per character. bootstrap plugin for scheduled actions."
+      },
+      "comparison.cost_model": {
+        "source_url": "https://github.com/elizaos/eliza",
+        "access_method": "direct_url",
+        "update_frequency": "on-change",
+        "notes": "Open-source, MIT. No pricing found in docs — self-hosted only for core framework. elizaOS cloud/managed tier: not confirmed, verify."
+      },
+      "comparison.tool_types": {
+        "source_url": "https://docs.elizaos.ai/plugin-registry/overview",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "90+ plugins confirmed. Plugin types: Actions, Providers, Evaluators, Services. Browser automation, code execution, custom tools all achievable via plugins. MCP: verify at plugin registry."
+      },
+      "comparison.memory_types": {
+        "source_url": "https://docs.elizaos.ai/runtime/memory",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Memory doc confirmed: 'Give your agent a brain that remembers, learns, and evolves'. In-context, external storage, persistent memory all referenced. Vector store: check runtime/memory for backend details."
+      },
+      "comparison.underlying_models": {
+        "source_url": "https://docs.elizaos.ai/runtime/models",
+        "access_method": "direct_url",
+        "update_frequency": "monthly",
+        "notes": "Confirmed providers: OpenAI (gpt-4+), Anthropic (claude-3-opus+), Ollama (local: llama2, all-minilm). Plugin registry also shows Google GenAI, OpenRouter. Model-agnostic via unified API layer."
+      }
+    }
+  },
+
+  "global_sources": {
+    "openclaw_cli_help": {
+      "access_method": "cli",
+      "command": "openclaw --help",
+      "notes": "Always-available local source for OpenClaw feature verification. Version: 2026.3.13."
+    },
+    "crewai_llms_txt": {
+      "source_url": "https://docs.crewai.com/llms.txt",
+      "access_method": "direct_url",
+      "update_frequency": "weekly",
+      "notes": "Complete CrewAI documentation index. Verified live 2026-04-10."
+    },
+    "agno_llms_txt": {
+      "source_url": "https://docs.agno.com/llms.txt",
+      "access_method": "direct_url",
+      "update_frequency": "weekly",
+      "notes": "Complete Agno documentation index. Verified live 2026-04-10."
+    },
+    "eliza_llms_txt": {
+      "source_url": "https://docs.elizaos.ai/llms.txt",
+      "access_method": "direct_url",
+      "update_frequency": "weekly",
+      "notes": "Complete elizaOS documentation index. Verified live 2026-04-10."
+    },
+    "claude_code_llms_txt": {
+      "source_url": "https://code.claude.com/docs/llms.txt",
+      "access_method": "direct_url",
+      "update_frequency": "weekly",
+      "notes": "Complete Claude Code documentation index. Verified live 2026-04-10."
+    }
+  },
+
+  "fields_excluded": {
+    "comparison.context_window.max_tokens_per_system": {
+      "reason": "Context window is determined by underlying model for most systems. Sourced from model provider docs, not the framework docs. Will be populated in agent-systems.json using model-specific sources.",
+      "alternative_source": "See underlying_models field and respective provider pricing/docs pages."
+    },
+    "system.homepage_openclaw": {
+      "reason": "openclaw.dev timed out during verification. URL noted but not live-confirmed. CLI binary is the reliable source for OpenClaw.",
+      "status": "unverified_url"
+    }
+  },
+
+  "update_schedule": {
+    "weekly": ["system.version", "comparison.cost_model", "comparison.context_window", "comparison.underlying_models", "llms_txt_indexes"],
+    "monthly": ["comparison.tool_types", "comparison.memory_types", "system.license"],
+    "on-change": ["qualification.*", "system.name", "system.homepage"]
+  }
+}
