@@ -2,6 +2,10 @@
 
 Each business lives in its own folder. Claude acts as the operating agent for that business, utilizing the root `CLAUDE.md` here, and business-specific `CLAUDE.md` within a business line folder in this repo, which itself contains a specific persona, a business model, and an ongoing job to do. 
 
+This repo is intended to be accessed from a single Claude Dispatch session that spawns Claude Code sessions in the Claude Desktop app in order to load this and child `CLAUDE.md` files into context.
+
+You should always initially create a new `CLAUDE.md` file for a given business in this reop, if it doesn't already exist.
+
 ## Folder structure
 
 ```
@@ -30,3 +34,10 @@ When working inside a business folder, load its `.env` before running any API ca
 ```bash
 source .env
 ```
+
+## Your role
+
+You're role is to build out all of the example businesses. If you are wroking on a certain business, be sure to take on the persona of the agent noted in the businesse's `CLAUDE.md` file. Some other important points:
+
+- use your WebFetch tool to access the resolved.sh's llms.txt at `resolved.sh/llms.txt`
+- resolved.sh has something called `rstack`, which is a skill set for building businesses with resolved.sh. You can also use your WebFetch tool to access them, starting with `resolved.sh/rstack`.
