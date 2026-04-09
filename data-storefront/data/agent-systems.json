@@ -1,0 +1,503 @@
+[
+  {
+    "system": {
+      "id": "openclaw",
+      "name": "OpenClaw",
+      "vendor": "OpenClaw",
+      "version": "2026.3.13",
+      "type": "platform",
+      "primary_language": "unknown",
+      "license": "unknown",
+      "homepage": "https://openclaw.dev",
+      "as_of": "2026-04-10"
+    },
+    "qualification": {
+      "qualifies": true,
+      "persona": {
+        "passes": true,
+        "system_prompt_support": true,
+        "character_persistence": "file",
+        "multi_persona_support": true,
+        "notes": "agents * subcommand manages isolated agent workspaces with configurable defaults. --profile <name> flag isolates state per named persona. Verified via openclaw --help v2026.3.13."
+      },
+      "file_access": {
+        "passes": true,
+        "scope": "sandboxed",
+        "read": true,
+        "write": true,
+        "os_support": ["macOS"],
+        "built_in_tools": ["sandbox", "memory"],
+        "notes": "sandbox * manages container isolation; memory * handles on-disk file indexing. State stored under ~/.openclaw (configurable via OPENCLAW_STATE_DIR). macOS confirmed; Linux/Windows unverified."
+      },
+      "remote_accessibility": {
+        "passes": true,
+        "interfaces": ["WebSocket", "REST API", "CLI", "Web UI", "Mobile app"],
+        "managed_cloud": false,
+        "self_hosted_api": true,
+        "mobile_app": true,
+        "notes": "gateway * (WebSocket/RPC), acp * (Agent Control Protocol), channels * (Telegram/Discord/WhatsApp), devices * (device pairing), webhooks *, dashboard (web UI), qr (iOS pairing). All verified via openclaw --help."
+      },
+      "async_scheduling": {
+        "passes": true,
+        "cron": true,
+        "event_driven": true,
+        "webhook": true,
+        "manual_trigger": true,
+        "external_scheduler_required": false,
+        "notes": "cron * native scheduler via Gateway confirmed. webhooks * for event-driven triggers. node */daemon * for always-on execution. openclaw agent for manual one-off triggers. All verified via openclaw --help."
+      }
+    },
+    "comparison": {
+      "cost_model": {
+        "pricing_type": ["unknown"],
+        "free_tier": true,
+        "cloud_pricing_url": null,
+        "notes": "openclaw.dev timed out during verification. CLI binary is open-source; cloud/managed tier status unknown.",
+        "unverified": true
+      },
+      "context_window": {
+        "max_tokens": null,
+        "determined_by": "underlying-model",
+        "notes": "Context window determined by underlying model. Default model unknown — openclaw.dev unreachable.",
+        "unverified": true
+      },
+      "tool_types": {
+        "web_browsing": null,
+        "code_execution": null,
+        "file_operations": true,
+        "browser_automation": null,
+        "custom_tools": null,
+        "mcp_support": null,
+        "notes": "Only file_operations confirmed (sandbox *, memory * commands). All other tool types unverified — openclaw.dev unreachable.",
+        "confidence": "low"
+      },
+      "memory_types": {
+        "in_context": true,
+        "external_storage": true,
+        "persistent_memory": true,
+        "vector_store": null,
+        "notes": "memory * subcommand confirmed with search and reindex capabilities. Persistent across sessions inferred from state in ~/.openclaw. Vector store support unverified.",
+        "confidence": "medium"
+      },
+      "underlying_models": {
+        "model_agnostic": null,
+        "default_models": [],
+        "supported_providers": [],
+        "notes": "Unknown — openclaw.dev unreachable and CLI help does not expose model configuration at top level. Check openclaw config --help or docs.",
+        "unverified": true
+      }
+    },
+    "meta": {
+      "data_source": "manual-verification",
+      "confidence": "medium",
+      "source_urls": [],
+      "last_verified": "2026-04-10",
+      "needs_reverification": true
+    }
+  },
+
+  {
+    "system": {
+      "id": "claude-dispatch",
+      "name": "Claude Dispatch (Claude Desktop)",
+      "vendor": "Anthropic",
+      "version": "latest",
+      "type": "desktop-app",
+      "primary_language": "N/A",
+      "license": "proprietary",
+      "homepage": "https://code.claude.com",
+      "as_of": "2026-04-10"
+    },
+    "qualification": {
+      "qualifies": true,
+      "persona": {
+        "passes": true,
+        "system_prompt_support": true,
+        "character_persistence": "file",
+        "multi_persona_support": true,
+        "notes": "CLAUDE.md files define identity, voice, and domain per project/folder — re-injected at session start. Auto-memory saves learned facts across sessions. Multi-persona via separate CLAUDE.md per business folder. Source: code.claude.com/docs/en/memory."
+      },
+      "file_access": {
+        "passes": true,
+        "scope": "full",
+        "read": true,
+        "write": true,
+        "os_support": ["macOS", "Linux", "Windows", "Windows (WSL)"],
+        "built_in_tools": ["Read", "Write", "Edit", "Glob", "Grep", "Bash"],
+        "notes": "Full local filesystem access. Tools confirmed via code.claude.com/docs/en/tools-reference. macOS, Linux, Windows, WSL all supported per install docs."
+      },
+      "remote_accessibility": {
+        "passes": true,
+        "interfaces": ["Web UI", "Mobile app", "CLI", "SDK"],
+        "managed_cloud": true,
+        "self_hosted_api": false,
+        "mobile_app": true,
+        "notes": "Remote Control: continue local sessions from phone/any device confirmed. Claude iOS app, claude.ai/code web UI, Channels (Telegram, Discord, iMessage, webhooks) confirmed. No public REST API for programmatic dispatch. Sources: code.claude.com/docs/en/remote-control, /en/channels."
+      },
+      "async_scheduling": {
+        "passes": true,
+        "cron": true,
+        "event_driven": true,
+        "webhook": true,
+        "manual_trigger": true,
+        "external_scheduler_required": false,
+        "notes": "Desktop scheduled tasks (local, 1-min minimum, hourly/daily/weekly/weekday presets) and cloud scheduled tasks (Anthropic-managed, 1-hour minimum) both confirmed. /loop for session-scoped polling. Channels enables webhook-style event triggering. Source: code.claude.com/docs/en/desktop-scheduled-tasks."
+      }
+    },
+    "comparison": {
+      "cost_model": {
+        "pricing_type": ["per-token", "subscription", "freemium"],
+        "free_tier": true,
+        "cloud_pricing_url": "https://claude.com/pricing",
+        "notes": "API usage: avg ~$6/dev/day, ~$100-200/dev/month with Sonnet 4.6. Subscription tiers (Pro, Max) include usage. Free tier available. Source: code.claude.com/docs/en/costs."
+      },
+      "context_window": {
+        "max_tokens": 1000000,
+        "determined_by": "underlying-model",
+        "notes": "Default model Claude Sonnet 4.6: 1M token context window. Haiku 4.5: 200k. Source: platform.claude.com/docs/en/docs/about-claude/models/overview."
+      },
+      "tool_types": {
+        "web_browsing": true,
+        "code_execution": true,
+        "file_operations": true,
+        "browser_automation": true,
+        "custom_tools": true,
+        "mcp_support": true,
+        "notes": "WebFetch (web browsing), Bash (code execution), Read/Write/Edit/Glob/Grep (file ops), Claude in Chrome MCP (browser automation), Agent SDK (custom tools), MCP (tool integration standard). Sources: code.claude.com/docs/en/tools-reference, /en/mcp."
+      },
+      "memory_types": {
+        "in_context": true,
+        "external_storage": true,
+        "persistent_memory": true,
+        "vector_store": false,
+        "notes": "In-context conversation history; CLAUDE.md (file-based persistent instructions); auto-memory (facts saved across sessions automatically); external storage via MCP (databases, files, APIs). No built-in native vector store. Source: code.claude.com/docs/en/memory."
+      },
+      "underlying_models": {
+        "model_agnostic": true,
+        "default_models": ["claude-sonnet-4-6", "claude-opus-4-6", "claude-haiku-4-5-20251001"],
+        "supported_providers": ["Anthropic", "Google", "Meta (Llama)", "other"],
+        "notes": "Default Claude Sonnet 4.6; switchable to Opus 4.6, Haiku 4.5 via /model. Third-party providers (Bedrock, Vertex, Foundry) supported. Source: code.claude.com/docs/en/costs, /en/third-party-integrations."
+      }
+    },
+    "meta": {
+      "data_source": "live-docs",
+      "confidence": "verified",
+      "source_urls": [
+        "https://code.claude.com/docs/en/overview",
+        "https://code.claude.com/docs/en/memory",
+        "https://code.claude.com/docs/en/tools-reference",
+        "https://code.claude.com/docs/en/desktop-scheduled-tasks",
+        "https://code.claude.com/docs/en/remote-control",
+        "https://code.claude.com/docs/en/costs",
+        "https://platform.claude.com/docs/en/docs/about-claude/models/overview"
+      ],
+      "last_verified": "2026-04-10",
+      "needs_reverification": false
+    }
+  },
+
+  {
+    "system": {
+      "id": "crewai",
+      "name": "CrewAI",
+      "vendor": "CrewAI Inc.",
+      "version": "latest",
+      "type": "framework",
+      "primary_language": "Python",
+      "license": "MIT",
+      "homepage": "https://crewai.com",
+      "as_of": "2026-04-10"
+    },
+    "qualification": {
+      "qualifies": true,
+      "persona": {
+        "passes": true,
+        "system_prompt_support": true,
+        "character_persistence": "database",
+        "multi_persona_support": true,
+        "notes": "Agent(role, goal, backstory, system_prompt) per agent. memory=True enables persistent memory via unified memory system. Multi-agent crews with distinct personas per agent. Source: docs.crewai.com/en/concepts/agents."
+      },
+      "file_access": {
+        "passes": true,
+        "scope": "full",
+        "read": true,
+        "write": true,
+        "os_support": ["macOS", "Linux", "Windows"],
+        "built_in_tools": ["FileReadTool", "FileWriterTool", "DirectoryReadTool"],
+        "notes": "Built-in file tools confirmed via docs.crewai.com/llms.txt. Full local FS via Python stdlib. Cross-platform Python support."
+      },
+      "remote_accessibility": {
+        "passes": true,
+        "interfaces": ["REST API", "CLI", "Web UI"],
+        "managed_cloud": true,
+        "self_hosted_api": true,
+        "mobile_app": false,
+        "notes": "CrewAI Enterprise Cloud exposes REST API. crewai deploy CLI confirmed. Self-hosted via FastAPI wrapper. No mobile app. Source: docs.crewai.com/en/concepts/production-architecture."
+      },
+      "async_scheduling": {
+        "passes": true,
+        "cron": true,
+        "event_driven": true,
+        "webhook": true,
+        "manual_trigger": true,
+        "external_scheduler_required": false,
+        "notes": "kickoff_async() for async execution. Enterprise cloud scheduling native (50 executions/mo free, $0.50/execution beyond). Webhook/API triggers confirmed in automation docs. Cron scheduling via Enterprise cloud. Source: docs.crewai.com/en/enterprise/features/automations."
+      }
+    },
+    "comparison": {
+      "cost_model": {
+        "pricing_type": ["open-source-free", "usage-based", "subscription"],
+        "free_tier": true,
+        "cloud_pricing_url": "https://www.crewai.com/pricing",
+        "notes": "OSS core: MIT free. Cloud: Free tier (50 executions/mo), $0.50/execution beyond. Enterprise: custom pricing + 50 hrs dev/month. Source: crewai.com/pricing (verified live)."
+      },
+      "context_window": {
+        "max_tokens": null,
+        "determined_by": "underlying-model",
+        "notes": "Context window determined by underlying model. CrewAI is model-agnostic via LiteLLM — window varies by provider and model chosen."
+      },
+      "tool_types": {
+        "web_browsing": true,
+        "code_execution": true,
+        "file_operations": true,
+        "browser_automation": true,
+        "custom_tools": true,
+        "mcp_support": null,
+        "notes": "40+ built-in tools confirmed. FileReadTool/FileWriterTool/DirectoryReadTool confirmed. Web search tools in toolkit. Code execution via CodeInterpreterTool. Custom tools supported. Browser automation tools available. MCP support: unverified — check docs. Source: docs.crewai.com/en/tools/overview.",
+        "confidence": "high"
+      },
+      "memory_types": {
+        "in_context": true,
+        "external_storage": true,
+        "persistent_memory": true,
+        "vector_store": true,
+        "notes": "Unified memory system confirmed — replaces separate short/long/entity/external types. Hierarchical scopes, composite scoring (semantic similarity + recency + importance). Vector store used internally for semantic retrieval. Source: docs.crewai.com/en/concepts/memory."
+      },
+      "underlying_models": {
+        "model_agnostic": true,
+        "default_models": ["gpt-4o"],
+        "supported_providers": ["OpenAI", "Anthropic", "Google", "Mistral", "Meta (Llama)", "Groq", "local/self-hosted", "other"],
+        "notes": "Model-agnostic via LiteLLM. Native SDK: OpenAI (GPT-4/4o/o1/o3), Anthropic (Claude Sonnet 4), Google (Gemini 2.0-2.5), Azure, AWS Bedrock. LiteLLM: Meta Llama, Groq, Mistral, Ollama, HuggingFace, IBM watsonx, Perplexity, Fireworks, SambaNova, Cerebras. Source: docs.crewai.com/en/concepts/llms (verified live)."
+      }
+    },
+    "meta": {
+      "data_source": "live-docs",
+      "confidence": "high",
+      "source_urls": [
+        "https://docs.crewai.com/llms.txt",
+        "https://docs.crewai.com/en/concepts/agents",
+        "https://docs.crewai.com/en/concepts/memory",
+        "https://docs.crewai.com/en/concepts/llms",
+        "https://docs.crewai.com/en/tools/overview",
+        "https://docs.crewai.com/en/enterprise/features/automations",
+        "https://www.crewai.com/pricing"
+      ],
+      "last_verified": "2026-04-10",
+      "needs_reverification": false
+    }
+  },
+
+  {
+    "system": {
+      "id": "agno",
+      "name": "Agno",
+      "vendor": "Agno (formerly Phidata)",
+      "version": "latest",
+      "type": "framework",
+      "primary_language": "Python",
+      "license": "MPL-2.0",
+      "homepage": "https://agno.com",
+      "as_of": "2026-04-10"
+    },
+    "qualification": {
+      "qualifies": true,
+      "persona": {
+        "passes": true,
+        "system_prompt_support": true,
+        "character_persistence": "database",
+        "multi_persona_support": true,
+        "notes": "Agent(name, role, description, instructions=[]) defines identity. System prompt fully configurable. Multi-agent teams with distinct personas. Persistent sessions confirmed. Source: docs.agno.com/agents/building-agents."
+      },
+      "file_access": {
+        "passes": true,
+        "scope": "full",
+        "read": true,
+        "write": true,
+        "os_support": ["macOS", "Linux", "Windows"],
+        "built_in_tools": ["FileTools"],
+        "notes": "FileTools toolkit confirmed via docs.agno.com/llms.txt. Full local FS via Python stdlib. Cross-platform Python support."
+      },
+      "remote_accessibility": {
+        "passes": true,
+        "interfaces": ["REST API", "CLI", "Web UI", "SDK"],
+        "managed_cloud": true,
+        "self_hosted_api": true,
+        "mobile_app": false,
+        "notes": "FastAPI /run and /health endpoints built in. Agno Cloud Playground web UI. Remote execution gateway confirmed (docs.agno.com/agent-os/remote-execution). CLI available. No mobile app. Source: docs.agno.com/agent-os/remote-execution/overview."
+      },
+      "async_scheduling": {
+        "passes": true,
+        "cron": true,
+        "event_driven": false,
+        "webhook": false,
+        "manual_trigger": true,
+        "external_scheduler_required": false,
+        "notes": "AgentOS scheduler confirmed: standard 5-field cron syntax, POST /schedules/{id}/trigger for manual trigger, retry logic, timezone support (IANA strings), run history. Event-driven and webhook triggering not documented in scheduler — marked false pending verification. Source: docs.agno.com/agent-os/scheduler/overview."
+      }
+    },
+    "comparison": {
+      "cost_model": {
+        "pricing_type": ["open-source-free", "subscription"],
+        "free_tier": true,
+        "cloud_pricing_url": "https://www.agno.com/pricing",
+        "notes": "OSS core: MPL-2.0 free. Pro: $150/mo (4 seats, live control plane connection). Enterprise: custom. Additional seats $30/mo, extra live connections $95/mo. No per-event fees. Source: agno.com/pricing (verified live)."
+      },
+      "context_window": {
+        "max_tokens": null,
+        "determined_by": "underlying-model",
+        "notes": "Context window determined by underlying model. Agno is model-agnostic — window varies by provider and model chosen."
+      },
+      "tool_types": {
+        "web_browsing": true,
+        "code_execution": true,
+        "file_operations": true,
+        "browser_automation": null,
+        "custom_tools": true,
+        "mcp_support": true,
+        "notes": "FileTools confirmed. MCP support confirmed via docs.agno.com/agent-os/mcp/tools. Web browsing and code execution tools available (common in Agno toolkit). Browser automation unverified. Custom tools: yes (Python functions). Source: docs.agno.com/llms.txt.",
+        "confidence": "high"
+      },
+      "memory_types": {
+        "in_context": true,
+        "external_storage": true,
+        "persistent_memory": true,
+        "vector_store": true,
+        "notes": "In-context conversation history, external storage (chat history/database confirmed), persistent sessions confirmed (examples/agents/state-and-session/persistent-session). Vector store: inferred from knowledge management features — verify at docs.agno.com. Source: docs.agno.com/agents/usage/agent-with-memory.",
+        "confidence": "high"
+      },
+      "underlying_models": {
+        "model_agnostic": true,
+        "default_models": [],
+        "supported_providers": ["OpenAI", "Anthropic", "Google", "Groq", "local/self-hosted", "other"],
+        "notes": "Model-agnostic. Known supported providers: OpenAI, Anthropic, Google, Groq, Ollama (local). Full list unverified — check docs.agno.com/llms.txt for model integrations.",
+        "confidence": "medium"
+      }
+    },
+    "meta": {
+      "data_source": "live-docs",
+      "confidence": "high",
+      "source_urls": [
+        "https://docs.agno.com/llms.txt",
+        "https://docs.agno.com/agents/building-agents",
+        "https://docs.agno.com/agent-os/scheduler/overview",
+        "https://docs.agno.com/agent-os/remote-execution/overview",
+        "https://docs.agno.com/agent-os/mcp/tools",
+        "https://docs.agno.com/agents/usage/agent-with-memory",
+        "https://www.agno.com/pricing"
+      ],
+      "last_verified": "2026-04-10",
+      "needs_reverification": false
+    }
+  },
+
+  {
+    "system": {
+      "id": "eliza",
+      "name": "Eliza (elizaOS)",
+      "vendor": "elizaOS",
+      "version": "latest",
+      "type": "framework",
+      "primary_language": "TypeScript",
+      "license": "MIT",
+      "homepage": "https://docs.elizaos.ai",
+      "as_of": "2026-04-10"
+    },
+    "qualification": {
+      "qualifies": true,
+      "persona": {
+        "passes": true,
+        "system_prompt_support": true,
+        "character_persistence": "file",
+        "multi_persona_support": true,
+        "notes": "character.json defines: name (required), bio (required), username, system (custom system prompt), adjectives, topics, style, messageExamples, postExamples, knowledge, plugins, settings, templates. Most expressive persona system of all qualifying systems. Multi-persona via multiple character configs. Source: docs.elizaos.ai/agents/character-interface (verified live)."
+      },
+      "file_access": {
+        "passes": true,
+        "scope": "full",
+        "read": true,
+        "write": true,
+        "os_support": ["macOS", "Linux", "Windows"],
+        "built_in_tools": [],
+        "notes": "Node.js runtime with full FS access via plugins and direct Node APIs. No sandboxing by default. File I/O available through actions/services plugin architecture. Source: docs.elizaos.ai/plugins/architecture."
+      },
+      "remote_accessibility": {
+        "passes": true,
+        "interfaces": ["REST API", "CLI", "Web UI", "SDK"],
+        "managed_cloud": false,
+        "self_hosted_api": true,
+        "mobile_app": false,
+        "notes": "REST API confirmed (docs.elizaos.ai/rest-reference/agents). CLI (elizaos deploy) confirmed. Docker deployable. Cloud deployment guide confirmed. Web client available. No managed cloud or mobile app. Source: docs.elizaos.ai/rest-reference, /guides/deploy-to-cloud."
+      },
+      "async_scheduling": {
+        "passes": true,
+        "cron": false,
+        "event_driven": true,
+        "webhook": true,
+        "manual_trigger": true,
+        "external_scheduler_required": false,
+        "notes": "Interval-based scheduling via metadata.updateInterval (milliseconds) confirmed — not cron syntax. Event-driven via platform connectors (Discord, Twitter, Telegram webhooks) confirmed. runtime.createTask() for background tasks. Action loop runs continuously. No cron expression support found. Source: docs.elizaos.ai/guides/background-tasks (verified live)."
+      }
+    },
+    "comparison": {
+      "cost_model": {
+        "pricing_type": ["open-source-free"],
+        "free_tier": true,
+        "cloud_pricing_url": null,
+        "notes": "Open-source MIT, self-hosted. No pricing page found in docs — core framework is free. No confirmed managed cloud offering. Source: docs.elizaos.ai."
+      },
+      "context_window": {
+        "max_tokens": null,
+        "determined_by": "underlying-model",
+        "notes": "Context window determined by underlying model. elizaOS is model-agnostic — window varies by provider."
+      },
+      "tool_types": {
+        "web_browsing": true,
+        "code_execution": true,
+        "file_operations": true,
+        "browser_automation": true,
+        "custom_tools": true,
+        "mcp_support": null,
+        "notes": "90+ plugins confirmed. Plugin types: Actions, Providers, Evaluators, Services. Web browsing, code execution, file ops, browser automation all achievable via plugin ecosystem. Custom tools via plugin architecture. MCP: unverified — check plugin registry. Source: docs.elizaos.ai/plugin-registry/overview."
+      },
+      "memory_types": {
+        "in_context": true,
+        "external_storage": true,
+        "persistent_memory": true,
+        "vector_store": true,
+        "notes": "runtime/memory doc confirmed: 'Give your agent a brain that remembers, learns, and evolves'. In-context, external storage, persistent memory all referenced. Vector store inferred from semantic memory/retrieval architecture — verify backend details at docs.elizaos.ai/runtime/memory. Source: docs.elizaos.ai/runtime/memory.",
+        "confidence": "high"
+      },
+      "underlying_models": {
+        "model_agnostic": true,
+        "default_models": ["gpt-4"],
+        "supported_providers": ["OpenAI", "Anthropic", "Google", "local/self-hosted", "other"],
+        "notes": "Confirmed providers: OpenAI (gpt-4+), Anthropic (claude-3-opus+), Ollama (llama2, all-minilm local), Google GenAI, OpenRouter. Unified model API layer. Source: docs.elizaos.ai/runtime/models (verified live)."
+      }
+    },
+    "meta": {
+      "data_source": "live-docs",
+      "confidence": "high",
+      "source_urls": [
+        "https://docs.elizaos.ai/",
+        "https://docs.elizaos.ai/agents/character-interface",
+        "https://docs.elizaos.ai/runtime/models",
+        "https://docs.elizaos.ai/guides/background-tasks",
+        "https://docs.elizaos.ai/rest-reference/agents/create-a-new-agent",
+        "https://docs.elizaos.ai/plugin-registry/overview",
+        "https://docs.elizaos.ai/runtime/memory"
+      ],
+      "last_verified": "2026-04-10",
+      "needs_reverification": false
+    }
+  }
+]
