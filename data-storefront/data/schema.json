@@ -1,0 +1,395 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agent-economy-data-bcf7.resolved.sh/data/schema.json",
+  "title": "Agent Systems Dataset Schema",
+  "description": "Canonical field definitions for qualifying agent systems. A qualifying system must pass all four rstack criteria: persona, file access, remote accessibility, and async scheduling.",
+  "version": "1.0.0",
+  "updated_at": "2026-04-10",
+  "fields": {
+    "system": {
+      "type": "object",
+      "description": "Top-level identity fields for the agent system.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Slug identifier for the system, lowercase, hyphenated. E.g. 'openclaw', 'claude-dispatch'.",
+          "example": "openclaw"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the agent system.",
+          "example": "OpenClaw"
+        },
+        "vendor": {
+          "type": "string",
+          "description": "Organization or individual that builds and maintains the system.",
+          "example": "OpenClaw"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version evaluated. Semver or date-based. 'latest' if pinned to current.",
+          "example": "2026.3.13"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["framework", "platform", "desktop-app", "cloud-service", "library"],
+          "description": "Architectural category of the system."
+        },
+        "primary_language": {
+          "type": "string",
+          "description": "Primary programming language or runtime for building with the system.",
+          "example": "Python"
+        },
+        "license": {
+          "type": "string",
+          "description": "License of the core system. 'proprietary' for closed-source.",
+          "example": "MIT"
+        },
+        "homepage": {
+          "type": "string",
+          "format": "uri",
+          "description": "Official homepage or docs URL.",
+          "example": "https://openclaw.dev"
+        },
+        "as_of": {
+          "type": "string",
+          "format": "date",
+          "description": "Date this record was last verified. ISO 8601.",
+          "example": "2026-04-10"
+        }
+      }
+    },
+
+    "qualification": {
+      "type": "object",
+      "description": "The four rstack qualifying criteria. All must be true for a system to be included in this dataset.",
+      "properties": {
+        "qualifies": {
+          "type": "boolean",
+          "description": "True if the system passes all four criteria."
+        },
+        "persona": {
+          "type": "object",
+          "description": "Can the system take on a consistent identity or character?",
+          "properties": {
+            "passes": {
+              "type": "boolean",
+              "description": "True if the system supports persona/identity configuration."
+            },
+            "system_prompt_support": {
+              "type": "boolean",
+              "description": "Can a custom system prompt or instructions be set per agent?"
+            },
+            "character_persistence": {
+              "type": "string",
+              "enum": ["session", "file", "database", "none"],
+              "description": "How identity/character is persisted across invocations. 'session' means within a single run only; 'file' means via a config/character file; 'database' means via persistent storage."
+            },
+            "multi_persona_support": {
+              "type": "boolean",
+              "description": "Can multiple distinct personas/agents with different identities be run from the same system?"
+            },
+            "notes": {
+              "type": "string",
+              "description": "Free-text notes on persona implementation details."
+            }
+          }
+        },
+        "file_access": {
+          "type": "object",
+          "description": "Can the system read and write files on an always-on computer?",
+          "properties": {
+            "passes": {
+              "type": "boolean",
+              "description": "True if the system supports file read/write on a host computer."
+            },
+            "scope": {
+              "type": "string",
+              "enum": ["full", "sandboxed", "container", "none"],
+              "description": "'full' = arbitrary OS paths; 'sandboxed' = restricted execution environment; 'container' = Docker/VM-scoped; 'none' = no file access."
+            },
+            "read": {
+              "type": "boolean",
+              "description": "Can the agent read files from the filesystem?"
+            },
+            "write": {
+              "type": "boolean",
+              "description": "Can the agent write or modify files on the filesystem?"
+            },
+            "os_support": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["macOS", "Linux", "Windows", "Windows (WSL)"] },
+              "description": "Operating systems on which file access is supported."
+            },
+            "built_in_tools": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Named built-in tools or primitives for file access, if any. E.g. ['FileReadTool', 'FileWriterTool']."
+            },
+            "notes": {
+              "type": "string",
+              "description": "Free-text notes on file access implementation."
+            }
+          }
+        },
+        "remote_accessibility": {
+          "type": "object",
+          "description": "Can the system be reached and directed remotely?",
+          "properties": {
+            "passes": {
+              "type": "boolean",
+              "description": "True if the system can be controlled from a remote client."
+            },
+            "interfaces": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["REST API", "WebSocket", "gRPC", "CLI", "Web UI", "Mobile app", "Desktop app", "SDK"]
+              },
+              "description": "Remote access interfaces available."
+            },
+            "managed_cloud": {
+              "type": "boolean",
+              "description": "Is there a managed cloud offering that hosts the agent and provides a stable endpoint?"
+            },
+            "self_hosted_api": {
+              "type": "boolean",
+              "description": "Can the operator self-host the agent and expose it via an API?"
+            },
+            "mobile_app": {
+              "type": "boolean",
+              "description": "Is there a first-party mobile app for remote control?"
+            },
+            "notes": {
+              "type": "string",
+              "description": "Free-text notes on remote accessibility."
+            }
+          }
+        },
+        "async_scheduling": {
+          "type": "object",
+          "description": "Can the system schedule and execute work asynchronously without a human in the loop?",
+          "properties": {
+            "passes": {
+              "type": "boolean",
+              "description": "True if at least one native scheduling primitive is built in."
+            },
+            "cron": {
+              "type": "boolean",
+              "description": "Native cron or interval-based scheduling built into the system (not requiring external tools)."
+            },
+            "event_driven": {
+              "type": "boolean",
+              "description": "Can the system react to events (messages, state changes) and execute work asynchronously?"
+            },
+            "webhook": {
+              "type": "boolean",
+              "description": "Can the system receive and respond to incoming webhook calls?"
+            },
+            "manual_trigger": {
+              "type": "boolean",
+              "description": "Can a human or script trigger a run on demand without being in-line with the execution?"
+            },
+            "external_scheduler_required": {
+              "type": "boolean",
+              "description": "True if cron/scheduling requires an external tool (e.g. APScheduler, Celery, cloud cron). A system can pass the criterion without this being false if event_driven or webhook alone suffice."
+            },
+            "notes": {
+              "type": "string",
+              "description": "Free-text notes on scheduling implementation."
+            }
+          }
+        }
+      }
+    },
+
+    "comparison": {
+      "type": "object",
+      "description": "Commonly published dimensions for comparing agent systems.",
+      "properties": {
+        "cost_model": {
+          "type": "object",
+          "description": "How operators and users pay to use the system.",
+          "properties": {
+            "pricing_type": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["open-source-free", "per-token", "per-task", "per-seat", "subscription", "usage-based", "freemium"]
+              },
+              "description": "One or more pricing models that apply."
+            },
+            "free_tier": {
+              "type": "boolean",
+              "description": "Is there a free tier or free self-hosted option?"
+            },
+            "cloud_pricing_url": {
+              "type": ["string", "null"],
+              "format": "uri",
+              "description": "URL to the official pricing page for the managed/cloud offering, if applicable."
+            },
+            "notes": {
+              "type": "string",
+              "description": "Free-text notes on pricing, including typical cost ranges if known."
+            }
+          }
+        },
+        "context_window": {
+          "type": "object",
+          "description": "Context window available to the agent during a single run.",
+          "properties": {
+            "max_tokens": {
+              "type": ["integer", "null"],
+              "description": "Maximum context window in tokens. Null if not applicable or variable by underlying model."
+            },
+            "determined_by": {
+              "type": "string",
+              "enum": ["framework", "underlying-model", "configurable", "unknown"],
+              "description": "Whether the context limit is set by the framework itself or inherited from the underlying model."
+            },
+            "notes": {
+              "type": "string",
+              "description": "Free-text notes, e.g. if context size varies by model choice."
+            }
+          }
+        },
+        "tool_types": {
+          "type": "object",
+          "description": "Categories of tools the agent can use.",
+          "properties": {
+            "web_browsing": {
+              "type": "boolean",
+              "description": "Can the agent browse the web or fetch URLs?"
+            },
+            "code_execution": {
+              "type": "boolean",
+              "description": "Can the agent execute code (Python, JS, shell, etc.)?"
+            },
+            "file_operations": {
+              "type": "boolean",
+              "description": "Can the agent read/write files via a tool interface?"
+            },
+            "browser_automation": {
+              "type": "boolean",
+              "description": "Can the agent automate a real browser (e.g. Playwright, Selenium)?"
+            },
+            "custom_tools": {
+              "type": "boolean",
+              "description": "Can operators define and register arbitrary custom tools or function calls?"
+            },
+            "mcp_support": {
+              "type": "boolean",
+              "description": "Does the system support the Model Context Protocol (MCP) for tool integration?"
+            },
+            "notes": {
+              "type": "string",
+              "description": "Free-text notes on tool ecosystem."
+            }
+          }
+        },
+        "memory_types": {
+          "type": "object",
+          "description": "Memory mechanisms available to the agent.",
+          "properties": {
+            "in_context": {
+              "type": "boolean",
+              "description": "Conversation/session history passed in the context window."
+            },
+            "external_storage": {
+              "type": "boolean",
+              "description": "Agent can read/write to an external store (database, vector store, file) between runs."
+            },
+            "persistent_memory": {
+              "type": "boolean",
+              "description": "First-class persistent memory that survives across sessions without manual wiring."
+            },
+            "vector_store": {
+              "type": "boolean",
+              "description": "Built-in or natively integrated vector store for semantic memory/retrieval."
+            },
+            "notes": {
+              "type": "string",
+              "description": "Free-text notes on memory implementation."
+            }
+          }
+        },
+        "underlying_models": {
+          "type": "object",
+          "description": "Which AI models the system can use.",
+          "properties": {
+            "model_agnostic": {
+              "type": "boolean",
+              "description": "Can the operator choose from multiple model providers?"
+            },
+            "default_models": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Default or primary models the system is built around.",
+              "example": ["claude-sonnet-4-6", "gpt-4o"]
+            },
+            "supported_providers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["Anthropic", "OpenAI", "Google", "Mistral", "Meta (Llama)", "Cohere", "Groq", "local/self-hosted", "other"]
+              },
+              "description": "Model providers whose models can be used with this system."
+            },
+            "notes": {
+              "type": "string",
+              "description": "Free-text notes on model support."
+            }
+          }
+        }
+      }
+    },
+
+    "meta": {
+      "type": "object",
+      "description": "Dataset record metadata.",
+      "properties": {
+        "data_source": {
+          "type": "string",
+          "enum": ["live-docs", "training-knowledge", "manual-verification", "community-sourced"],
+          "description": "How this record's data was obtained."
+        },
+        "confidence": {
+          "type": "string",
+          "enum": ["verified", "high", "medium", "low"],
+          "description": "Confidence level in the accuracy of this record. 'verified' = confirmed against live official docs."
+        },
+        "source_urls": {
+          "type": "array",
+          "items": { "type": "string", "format": "uri" },
+          "description": "URLs of official documentation used to verify this record."
+        },
+        "last_verified": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the record was last checked against live sources."
+        },
+        "needs_reverification": {
+          "type": "boolean",
+          "description": "Flag set when a field is known to change frequently or was not live-verified."
+        }
+      }
+    }
+  },
+
+  "qualifying_systems": [
+    "openclaw",
+    "claude-dispatch",
+    "crewai",
+    "agno",
+    "eliza"
+  ],
+
+  "update_frequencies": {
+    "cost_model": "weekly",
+    "tool_types": "monthly",
+    "memory_types": "monthly",
+    "context_window": "weekly",
+    "underlying_models": "weekly",
+    "qualification": "on-change"
+  }
+}
