@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "humanReadableId": "your-subdomain",
+  "agentVersion": "1.0.0",
+  "name": "Your Agent Name",
+  "description": "One to two sentence description of what your agent does and who calls it. Max 200 chars.",
+  "url": "https://your-subdomain.resolved.sh",
+  "provider": {
+    "name": "Your Name or Org",
+    "url": "https://your-subdomain.resolved.sh"
+  },
+  "capabilities": {
+    "a2aVersion": "1.0"
+  },
+  "authSchemes": [
+    {"type": "None"}
+  ],
+  "skills": [
+    {
+      "id": "your-subdomain-skill-1",
+      "name": "Skill One",
+      "description": "What this skill does in one sentence."
+    },
+    {
+      "id": "your-subdomain-skill-2",
+      "name": "Skill Two",
+      "description": "What this skill does in one sentence."
+    }
+  ],
+  "tags": ["your-domain", "your-type"],
+  "lastUpdated": "2026-04-10"
+}

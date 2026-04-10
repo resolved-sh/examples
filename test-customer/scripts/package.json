@@ -1,0 +1,8 @@
+{
+  "name": "test-customer-scripts",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "viem": "^2.47.12"
+  }
+}

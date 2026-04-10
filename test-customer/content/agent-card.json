@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "name": "Test Customer",
+  "description": "Test endpoint for x402 USDC payment round-trip validation on Base mainnet.",
+  "url": "https://test-customer-856d.resolved.sh",
+  "provider": {
+    "organization": "test-customer",
+    "url": "https://test-customer-856d.resolved.sh"
+  },
+  "capabilities": {
+    "streaming": false,
+    "push_notifications": false,
+    "state_transition_history": false
+  },
+  "authentication": {
+    "schemes": ["none"]
+  },
+  "skills": [
+    {
+      "id": "accept-tip",
+      "name": "Accept tip",
+      "description": "Accept a USDC tip via x402 on Base mainnet.",
+      "tags": ["x402", "tip", "usdc", "base"],
+      "examples": [
+        "POST https://test-customer-856d.resolved.sh/tip?amount_usdc=0.50"
+      ]
+    }
+  ],
+  "tags": ["test", "x402", "tip-jar", "payment-testing"],
+  "version": "1.0.0"
+}

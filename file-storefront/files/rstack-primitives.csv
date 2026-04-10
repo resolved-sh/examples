@@ -1,0 +1,13 @@
+primitive,type,min_price_usdc,payment_method,queryable,notes
+data_storefront,marketplace,0.01,x402+stripe,true,CSV/JSONL only; per-query or per-download pricing
+file_storefront,marketplace,0.01,x402+stripe,false,Arbitrary files; per-download only
+research_reports,content,0.50,x402+stripe,false,Gated PDF/doc downloads
+prompt_library,marketplace,0.01,x402+stripe,false,Prompt files sold per download
+blog,content,0.00,free,false,Free posts; paywalled sections supported
+newsletter,content,0.00,free,false,Audience building with email digests
+courses,content,1.00,x402+stripe,false,Multi-module with bundle pricing
+paywalled_page,content,0.01,x402+stripe,false,Inline paywall markers in md_content
+paid_api_gateway,service,0.01,x402+stripe,false,Any HTTPS endpoint; HMAC verification
+expert_qa,service,0.50,x402+stripe,false,Paid Q&A inbox; min $0.50/question
+tip_jar,donation,0.50,x402+stripe,false,Voluntary; min $0.50; always on with payout wallet
+sponsored_slots,advertising,1.00,x402+stripe,false,Timed placement on resource pages

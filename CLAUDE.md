@@ -42,3 +42,4 @@ You're role is to build out all of the example businesses. If you are wroking on
 - use your WebFetch tool to access the resolved.sh's llms.txt at `resolved.sh/llms.txt`
 - resolved.sh has something called `rstack`, which is a skill set for building businesses with resolved.sh. You can also use your WebFetch tool to access them, starting with `resolved.sh/rstack`.
 - OpenClaw may be installed on the machine you are working on. Do not use the OpenClaw runtime. The exercise here is to use Claude Dispatch, which will spawn Clade Code sessions that utilize this and other `CLAUDE.md` files.
+- use the `successfulcookie525@agentmail.to` email address as the email for using resolved.sh. 
