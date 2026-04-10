@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0",
+  "humanReadableId": "agent-economy-data-bcf7",
+  "agentVersion": "1.0.0",
+  "name": "Agent Economy Data",
+  "description": "Structured datasets comparing agent systems against the rstack four-part agent definition. For developers and agents evaluating agent infrastructure.",
+  "url": "https://agent-economy-data-bcf7.resolved.sh",
+  "provider": {
+    "name": "Agent Economy Data",
+    "url": "https://agent-economy-data-bcf7.resolved.sh"
+  },
+  "capabilities": {
+    "a2aVersion": "1.0"
+  },
+  "authSchemes": [{"type": "None"}],
+  "skills": [
+    {
+      "id": "agent-economy-data-bcf7-query",
+      "name": "Query agent systems dataset",
+      "description": "Filter the agent systems dataset by qualification status, scheduling type, cost model, provider support, and other dimensions."
+    },
+    {
+      "id": "agent-economy-data-bcf7-download",
+      "name": "Download full dataset",
+      "description": "Download the complete agent systems comparison dataset as JSON or CSV."
+    },
+    {
+      "id": "agent-economy-data-bcf7-schema",
+      "name": "Inspect schema and sample rows",
+      "description": "Retrieve the free dataset schema and sample rows to evaluate before purchasing."
+    },
+    {
+      "id": "agent-economy-data-bcf7-qualification",
+      "name": "Get qualification evidence",
+      "description": "Retrieve per-system pass/fail scores with source citations for each of the four rstack agent criteria."
+    }
+  ],
+  "tags": ["agent-economy", "data-api", "agent-infrastructure", "comparison-data"],
+  "lastUpdated": "2026-04-10"
+}
