@@ -277,7 +277,7 @@
         "model_agnostic": true,
         "default_models": ["gpt-4o"],
         "supported_providers": ["OpenAI", "Anthropic", "Google", "Mistral", "Meta (Llama)", "Groq", "local/self-hosted", "other"],
-        "notes": "Model-agnostic via LiteLLM. Native SDK: OpenAI (GPT-4/4o/o1/o3), Anthropic (Claude Sonnet 4), Google (Gemini 2.0-2.5), Azure, AWS Bedrock. LiteLLM: Meta Llama, Groq, Mistral, Ollama, HuggingFace, IBM watsonx, Perplexity, Fireworks, SambaNova, Cerebras. Source: docs.crewai.com/en/concepts/llms (verified live)."
+        "notes": "Model-agnostic via LiteLLM. Native SDK: OpenAI (GPT-4/4o/o1/o3), Anthropic (Claude Opus 4.6, Claude Sonnet 4.6, and earlier versions), Google (Gemini 2.0-2.5), Azure, AWS Bedrock. LiteLLM: Meta Llama, Groq, Mistral, Ollama, HuggingFace, IBM watsonx, Perplexity, Fireworks, SambaNova, Cerebras. Extended thinking support confirmed. Source: docs.crewai.com/en/concepts/llms (verified live 2026-04-10)."
       }
     },
     "meta": {
@@ -481,7 +481,7 @@
         "model_agnostic": true,
         "default_models": ["gpt-4"],
         "supported_providers": ["OpenAI", "Anthropic", "Google", "local/self-hosted", "other"],
-        "notes": "Confirmed providers: OpenAI (gpt-4+), Anthropic (claude-3-opus+), Ollama (llama2, all-minilm local), Google GenAI, OpenRouter. Unified model API layer. Source: docs.elizaos.ai/runtime/models (verified live)."
+        "notes": "Confirmed providers: OpenAI (gpt-4+), Anthropic (Claude Opus 4.6, Claude Sonnet 4.6+), Ollama (llama2, all-minilm local), Google GenAI, OpenRouter. Unified model API layer with automatic fallback. Source: docs.elizaos.ai/runtime/models (verified live 2026-04-10)."
       }
     },
     "meta": {
